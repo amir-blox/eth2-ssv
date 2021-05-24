@@ -34,7 +34,7 @@ jobs:
           else
             COV_COLOR=orange
           fi
-          curl "https://img.shields.io/badge/coavrege-$COV_TOTAL%25-$COV_COLOR" > ./docs/resources/cov-badge.svg
+          curl "https://img.shields.io/badge/coverage-$COV_TOTAL%25-$COV_COLOR" > ./docs/resources/cov-badge.svg
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add ./docs/resources/cov-badge.svg
