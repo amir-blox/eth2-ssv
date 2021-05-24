@@ -22,3 +22,21 @@ jobs:
 
       - name: Run make test
         run: make full-test
+
+      - name: Publish coverage
+        run: |
+          cat coverage.out
+          COV_TOTAL=`go tool cover -func=coverage.out | grep total | grep -Eo '[0-9]+\.[0-9]+'`
+          if (( $(echo "$COV_TOTAL <= 50" | bc -l) )) ; then
+            COV_COLOR=red
+          elif (( $(echo "$COV_TOTAL > 80" | bc -l) )); then
+            COV_COLOR=green
+          else
+            COV_COLOR=orange
+          fi
+          curl "https://img.shields.io/badge/coavrege-$COV_TOTAL%25-$COV_COLOR" > ./docs/resources/cov-badge.svg
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add ./docs/resources/cov-badge.svg
+          git commit -m "update code coverage badge"
+          git push
