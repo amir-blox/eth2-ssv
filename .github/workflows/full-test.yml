@@ -25,7 +25,6 @@ jobs:
 
       - name: Publish coverage
         run: |
-          cat coverage.out
           COV_TOTAL=`go tool cover -func=coverage.out | grep total | grep -Eo '[0-9]+\.[0-9]+'`
           if (( $(echo "$COV_TOTAL <= 50" | bc -l) )) ; then
             COV_COLOR=red
